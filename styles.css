@@ -1,0 +1,27 @@
+
+
+.container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    background-color: rgb(96, 97, 97);
+    grid-template-columns: repeat(4, 100px);
+    gap: 2px;
+    
+}
+
+.display {
+    grid-column: 1 / -1;
+    background-color: aliceblue;
+}
+
+#zero {
+    grid-column: 1 / 3;
+}
+
+button {
+    
+}
+
+
