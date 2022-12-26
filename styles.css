@@ -1,3 +1,7 @@
+* {
+    font-family: monospace;
+}
+
 body {
     background-color: rgb(227, 221, 215);
 }
@@ -32,12 +36,14 @@ main {
 }
 
 .previous-input {  
+    height: 30px;
     font-size: 32px;
     padding: 8px;
 }
 
 .current-input {
-    font-size: 64px;
+    height: 120px;
+    font-size: 56px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
@@ -49,7 +55,6 @@ main {
     border-radius: 10px;
 }
 
-
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -59,7 +64,6 @@ main {
     padding: 4px;
 }
 
-
 button {
     background-color: rgb(227, 220, 203);
     color: white;
@@ -67,7 +71,12 @@ button {
     height: 90px;
     border: 1px solid black;
     font-size: 32px;
-    color: rgb(27, 15, 4)
+    color: rgb(27, 15, 4);
+    transition-duration: 0.3s;
+}
+
+.operator, #plus-minus, #percent, #decimal, #equal {
+    background-color: rgb(244, 240, 232);
 }
 
 #equal {
@@ -76,8 +85,20 @@ button {
     margin: 1px;
 }
 
-#clear {
+#clear, #all-clear {
     background-color: rgb(255, 218, 224);
+}
+
+
+
+button:hover {
+    cursor: pointer;
+    background-color: #dec78e !important;
+
+}
+
+#all-clear:hover, #clear:hover {
+    background-color: rgb(250, 190, 200) !important;
 }
 
 
