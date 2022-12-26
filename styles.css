@@ -75,7 +75,7 @@ button {
     transition-duration: 0.3s;
 }
 
-.operator, #plus-minus, #percent, #decimal, #equal {
+.operator, #percent, #decimal {
     background-color: rgb(244, 240, 232);
 }
 
@@ -93,8 +93,14 @@ button {
 
 button:hover {
     cursor: pointer;
-    background-color: #dec78e !important;
+}
 
+.operand:hover {
+    background-color: rgb(230, 208, 153)
+}
+
+.operator:hover, #percent:hover, #decimal:hover {
+    background-color: rgb(240, 220, 180);
 }
 
 #all-clear:hover, #clear:hover {

@@ -21,13 +21,19 @@ document.addEventListener("DOMContentLoaded", () => {
         operand.addEventListener("click", (e) => {
             number = e.target.textContent;
 
+            if (operatorSelected == true) {
+                previousInput = currentInput + " " + currentOperator;
+                displayPrevious();
+                displayCurrent();
+                currentInput = "";
+                operatorSelected = false
+            }
             // Limits the number allowed to be input
             if (currentInput.length < 11) {
                 currentInput += number;
+                displayCurrent();
             }
-
-            displayCurrent();
-            displayPrevious();
+            
             
         });
     }
@@ -36,18 +42,18 @@ document.addEventListener("DOMContentLoaded", () => {
         
         operator.addEventListener("click", (e) => {
             currentOperator = e.target.textContent;
-            console.log(currentOperator)
             
             if (operatorSelected == false) {
                 operatorSelected = true;
-                console.log(operatorSelected)
             }
             else if (operatorSelected == true) {
-                previousInput = currentInput + " " + currentOperator;
-                displayPrevious();
-                displayCurrent();
+                operatorSelected = false
+                
                 currentInput = "";
             }
+
+            displayPrevious();
+            displayCurrent();
 
             
         })
