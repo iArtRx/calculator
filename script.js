@@ -13,16 +13,19 @@ let previousInput = "";
 let currentOperator = "";
 let operatorSelected = false;
 let floatInput = false;
+let repeatedOperator = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
     
     for (operand of operands) {
-    
+
         operand.addEventListener("click", (e) => {
             number = e.target.textContent;
 
+            repeatedOperator = 0;
+
             if (operatorSelected == true) {
-                previousInput = currentInput + " " + currentOperator;
+                previousInput = currentInput;
                 displayPrevious();
                 displayCurrent();
                 currentInput = "";
@@ -41,21 +44,47 @@ document.addEventListener("DOMContentLoaded", () => {
     for (operator of operators) {
         
         operator.addEventListener("click", (e) => {
-            currentOperator = e.target.textContent;
             
-            if (operatorSelected == false) {
-                operatorSelected = true;
-            }
-            else if (operatorSelected == true) {
-                operatorSelected = false
+            operatorSelected = true;
+            
+  
+            if (currentOperator.length == 0) {
                 
-                currentInput = "";
+                if (e.target.textContent == "=") {
+                    operatorSelected = false;
+                    return;
+                }
+               
+                currentOperator = e.target.textContent;
+                displayPrevious(); 
+                displayCurrent();
+            }
+            else if (currentOperator.length == 1) {
+
+                if (repeatedOperator > 0) {
+                    return;
+                }
+
+                tempPrevious = previousInput;
+                previousInput = currentInput;
+                currentInput = operate(tempPrevious, previousInput, currentOperator)
+                displayCurrent();
+
+                if(e.target.textContent == "=") {
+                    document.querySelector(".previous-input").innerHTML = tempPrevious + " " + currentOperator + " " + previousInput + " =";
+                    currentOperator = "";
+                    reset()
+                    return;
+                }
+                
+                displayPrevious()
+                currentOperator = e.target.textContent;
+                repeatedOperator ++;
+                
             }
 
-            displayPrevious();
-            displayCurrent();
-
             
+        
         })
     }
 
@@ -76,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clear.addEventListener("click", () => {
         currentInput = currentInput.slice(0, -1);
         displayCurrent();
+        displayPrevious();
     })
 
 })
@@ -85,19 +115,68 @@ displayCurrent = () => {
 }
 
 displayPrevious = () => {
-    document.querySelector(".previous-input").innerHTML = previousInput;
+    document.querySelector(".previous-input").innerHTML = currentInput + " " + currentOperator;
 }
 
 reset = () => {
     currentInput = "";
     previousInput = "";
-    operatorSelected = "";
+    currentOperator = "";
+    operatorSelected = false;
     floatInput = false;
+    repeatedOperator = 0;
+}
+
+// Check to see if string contains decimal point
+intOrFloat = (anInput) => {
+    
+    if (anInput.includes(".")) {
+        return parseFloat(anInput);
+    }
+    else {
+        return parseInt(anInput);
+    }
 }
 
 displayCurrent(currentInput);
 displayPrevious(previousInput);
 
+operate = (tempPrevious, previousInput, currentOperator) => {
+    // Convert string inputs to an integer or float
+    let first = intOrFloat(tempPrevious);
+    let second = intOrFloat(previousInput);
+    let result = 0;
+
+    if (currentOperator == "+") {
+        result = first + second;
+    }
+    else if (currentOperator == "-") {
+        result = first - second;
+    }
+    else if (currentOperator == "*") {
+        result = first * second;
+    }
+    else if (currentOperator == "/") {
+        result = first / second;
+    }
+
+    // Convert result back to a string
+    return numberToString(result);
+
+}
+
+numberToString = (number) => {
+    numberString = number.toString();
+
+    if (numberString.length > 10) {
+        return numberString.slice(0,10);
+    }
+
+    return numberString
+}
+
+
+/*
 operate = (a, b, op) => {
     return op === '+' ? a + b
     : op === '-' ? a - b
@@ -105,4 +184,4 @@ operate = (a, b, op) => {
     : op === '/' ? a / b
     : "invalid"
 }
-
+*/
