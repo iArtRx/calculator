@@ -39,6 +39,8 @@ main {
     height: 30px;
     font-size: 32px;
     padding: 8px;
+    max-width: fit-content;
+    overflow-wrap: break-word;
 }
 
 .current-input {

@@ -6,7 +6,9 @@ const operators = document.querySelectorAll(".operator");
 const decimal = document.querySelector("#decimal");
 const allClear = document.querySelector("#all-clear");
 const clear = document.querySelector("#clear");
-const percent = document.querySelector("percent");
+const percent = document.querySelector("#percent");
+const buttons = document.querySelectorAll("button")
+
 
 let currentInput = "";
 let previousInput = "";
@@ -46,8 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
         operator.addEventListener("click", (e) => {
             
             operatorSelected = true;
+
+            if (currentInput == "") {
+                currentInput = 0;
+            }
             
-  
             if (currentOperator.length == 0) {
                 
                 if (e.target.textContent == "=") {
@@ -69,6 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 previousInput = currentInput;
                 currentInput = operate(tempPrevious, previousInput, currentOperator)
                 displayCurrent();
+
+                if(currentInput.length == 11 && currentInput.includes(".")){
+                    disable();
+                    return;
+                }
 
                 if(e.target.textContent == "=") {
                     document.querySelector(".previous-input").innerHTML = tempPrevious + " " + currentOperator + " " + previousInput + " =";
@@ -98,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     allClear.addEventListener("click", () => {
         reset();
+        enable();
         displayCurrent();
         displayPrevious();
     })
@@ -169,19 +180,28 @@ numberToString = (number) => {
     numberString = number.toString();
 
     if (numberString.length > 10) {
-        return numberString.slice(0,10);
+        numberString = numberString.substring(0,1) + "." + numberString.substring(1, 10);
     }
 
     return numberString
 }
 
-
-/*
-operate = (a, b, op) => {
-    return op === '+' ? a + b
-    : op === '-' ? a - b
-    : op === '*' ? a * b
-    : op === '/' ? a / b
-    : "invalid"
+disable = () => {
+    for (let button of buttons) {
+        if (button.id == "all-clear") {
+            button.disabled = false;
+        }
+        else {
+            button.disabled = true;
+        }
+         
+    }
 }
-*/
+
+
+enable = () => {
+    for (let button of buttons) {
+        button.disabled = false;
+    }
+}
+
