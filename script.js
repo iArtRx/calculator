@@ -1,5 +1,6 @@
 /*
 Still things to do:
+Add keyboard input
 Fix decimal logic
 Negative numbers
 Fix large number logic
@@ -92,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(e.target.textContent == "=") {
                     document.querySelector(".previous-input").innerHTML = tempPrevious + " " + currentOperator + " " + previousInput + " =";
                     currentOperator = "";
-                    reset()
                     return;
                 }
                 
