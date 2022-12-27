@@ -1,3 +1,10 @@
+/*
+Still things to do:
+Fix decimal logic
+Negative numbers
+Fix large number logic
+*/
+
 //DOM Selectors
 const body = document.body;
 const main = document.main;
@@ -53,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentInput = 0;
             }
             
+            // Ensuring equal button doesn't work if selected first
             if (currentOperator.length == 0) {
                 
                 if (e.target.textContent == "=") {
@@ -73,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tempPrevious = previousInput;
                 previousInput = currentInput;
                 currentInput = operate(tempPrevious, previousInput, currentOperator)
+                
                 displayCurrent();
 
                 if(currentInput.length == 11 && currentInput.includes(".")){
@@ -91,9 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentOperator = e.target.textContent;
                 repeatedOperator ++;
                 
-            }
-
-            
+            }    
         
         })
     }
@@ -129,29 +136,15 @@ displayPrevious = () => {
     document.querySelector(".previous-input").innerHTML = currentInput + " " + currentOperator;
 }
 
-reset = () => {
-    currentInput = "";
-    previousInput = "";
-    currentOperator = "";
-    operatorSelected = false;
-    floatInput = false;
-    repeatedOperator = 0;
-}
 
-// Check to see if string contains decimal point
-intOrFloat = (anInput) => {
-    
-    if (anInput.includes(".")) {
-        return parseFloat(anInput);
-    }
-    else {
-        return parseInt(anInput);
-    }
-}
 
 displayCurrent(currentInput);
 displayPrevious(previousInput);
 
+
+//// Helper Functions
+
+// Calculates given the inputs
 operate = (tempPrevious, previousInput, currentOperator) => {
     // Convert string inputs to an integer or float
     let first = intOrFloat(tempPrevious);
@@ -176,16 +169,40 @@ operate = (tempPrevious, previousInput, currentOperator) => {
 
 }
 
+// Reinitialises all variables to default
+reset = () => {
+    currentInput = "";
+    previousInput = "";
+    currentOperator = "";
+    operatorSelected = false;
+    floatInput = false;
+    repeatedOperator = 0;
+}
+
+// Check to see if string contains decimal point
+intOrFloat = (anInput) => {
+    
+    if (anInput.includes(".")) {
+        return parseFloat(anInput);
+    }
+    else {
+        return parseInt(anInput);
+    }
+}
+
+// Converts number to String
 numberToString = (number) => {
     numberString = number.toString();
-
-    if (numberString.length > 10) {
-        numberString = numberString.substring(0,1) + "." + numberString.substring(1, 10);
+    
+    if (number > 99999999999) {
+        numberString = numberString.substring(0,1) + "." + numberString.substring(1, 10)
     }
-
+   
+    
     return numberString
 }
 
+// Disable and enable buttons depending on output 
 disable = () => {
     for (let button of buttons) {
         if (button.id == "all-clear") {
@@ -198,10 +215,11 @@ disable = () => {
     }
 }
 
-
 enable = () => {
     for (let button of buttons) {
         button.disabled = false;
     }
 }
+
+
 

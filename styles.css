@@ -10,7 +10,15 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 100vh;
+}
 
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 2rem;
 }
 
 .container {
@@ -39,8 +47,9 @@ main {
     height: 30px;
     font-size: 32px;
     padding: 8px;
-    max-width: fit-content;
-    overflow-wrap: break-word;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .current-input {
