@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         operand.addEventListener("click", (e) => {
             number = e.target.textContent;
+            clear.disabled = false;
 
             repeatedOperator = 0;
 
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         operator.addEventListener("click", (e) => {
             
             operatorSelected = true;
+            clear.disabled = true;
 
             if (currentInput == "") {
                 currentInput = 0;
@@ -91,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 if(e.target.textContent == "=") {
-                    document.querySelector(".previous-input").innerHTML = tempPrevious + " " + currentOperator + " " + previousInput + " =";
+                    document.querySelector(".previous-input").innerHTML = `${tempPrevious} ${currentOperator} ${previousInput} =`;
                     currentOperator = "";
                     return;
                 }
@@ -133,7 +135,7 @@ displayCurrent = () => {
 }
 
 displayPrevious = () => {
-    document.querySelector(".previous-input").innerHTML = currentInput + " " + currentOperator;
+    document.querySelector(".previous-input").innerHTML = `${currentInput} ${currentOperator}`;
 }
 
 
@@ -194,7 +196,7 @@ intOrFloat = (anInput) => {
 numberToString = (number) => {
     numberString = number.toString();
     
-    if (number > 99999999999) {
+    if (numberString.length > 11) {
         numberString = numberString.substring(0,1) + "." + numberString.substring(1, 10)
     }
    
